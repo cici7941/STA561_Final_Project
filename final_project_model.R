@@ -20,6 +20,7 @@ for(i in 1:length(ynew)){
 }
 result1 <- table(bank$y,ynew)
 result1
+print(xtable(result1), caption = "comparison between logistic regression prediction results and actual results", comment = FALSE)
 pred.rate1 <- (result1[1,1]+result1[2,2])/sum(result1)
 pred.rate1
 # cross-validation estimate of prediction error
@@ -29,7 +30,7 @@ brier <- function(y, pHat) {
 }
 cv.glm(bank1, model, cost = brier, K = 10)$delta
 coef1 <- summary(model)$coefficients
-print(xtable(coef1, digits = 3, caption = "coefficient estimates for logistic regression model"),comment =FALSE, size ="\\small")
+print(xtable(coef1, digits = 3, caption = "coefficient estimates for logistic regression model"),comment = FALSE, size ="\\small")
 
 # LASSO
 library(glmnet)
@@ -50,6 +51,8 @@ plot(model2$glmnet.fit, "norm", label = TRUE)
 plot(model2$glmnet.fit,"lambda", label = TRUE)
 result2 <- table(bank$y,ynew2)
 result2
+print(xtable(result2), caption = "comparison between LASSO prediction results and actual results", comment = FALSE)
+
 pred.rate2 <- (result2[1,1]+result2[2,2])/sum(result2)
 pred.rate2
 coef2 <- data.frame(coef(model2)[,1])
@@ -62,6 +65,7 @@ library(e1071)
 model3 <- svm(y~., data = bank1)
 result3 <- table(bank$y,model3$fitted)
 result3
+print(xtable(result3), caption = "comparison between SVM prediction results and actual results", comment = FALSE)
 pred.rate3 <- (result3[1,1]+result3[2,2])/sum(result3)
 pred.rate3
 
